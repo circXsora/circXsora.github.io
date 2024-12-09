@@ -48,7 +48,6 @@ copy:
 #   icon: link || the description
 # ---------------
 social:
-  fa fa-github: https://github.com/circXsora || Github
   fa fa-envelope: circXsora@outlook.com || Email
 
 ####    search    ####
@@ -174,13 +173,13 @@ cover:
 lodding_bg:
   flink: /img/friend_404.gif #404後圖片
   post_page: /img/404.jpg #404後圖片
-#  post: /img/loading.gif ##加載動畫
+  post: /img/loading.gif ##加載動畫
 
 # A simple 404 page
 error_404:
   enable: true
   subtitle: '这里的空间没有受到圆环之理法则的干涉呢~~'
-  background: /img/404.jpg
+  background: /img/friend_404.gif
 
 post_meta:
   page:
@@ -577,7 +576,7 @@ aside:
       text: Follow Me
       link: https://github.com/circXsora
   card_announcement:
-    enable: true
+    enable: false
     content: This is my Blog
   card_recent_post:
     enable: true
