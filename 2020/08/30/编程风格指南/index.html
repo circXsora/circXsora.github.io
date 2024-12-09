@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="zh_CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>编程风格 | Magia &amp; Record</title><meta name="author" content="soraXsora"><meta name="copyright" content="soraXsora"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="编程风格2021.5.15更新：参考《.Net 设计规范》制定了编码风格。 C#类成员的设计私有字段名camelCasting命名法 1private int myHealth =..."><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://circxsora.github.io/2020/08/30/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E6%8C%87%E5%8D%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: ,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '编程风格',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/top_img.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Magia &amp; Record</span></a><a class="nav-page-title" href="/"><span class="site-name">编程风格</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">编程风格</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-08-30T04:46:17.000Z" title="Created 2020-08-30 12:46:17">2020-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-12-09T11:44:05.858Z" title="Updated 2024-12-09 19:44:05">2024-12-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="编程风格"><a href="#编程风格" class="headerlink" title="编程风格"></a>编程风格</h1><p>2021.5.15更新：参考《.Net 设计规范》制定了编码风格。</p>
+<h1 id="C"><a href="#C" class="headerlink" title="C#"></a>C#</h1><h3 id="类成员的设计"><a href="#类成员的设计" class="headerlink" title="类成员的设计"></a>类成员的设计</h3><h5 id="私有字段名"><a href="#私有字段名" class="headerlink" title="私有字段名"></a>私有字段名</h5><p>camelCasting命名法</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">int</span> myHealth = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="公-私有函数名，公-私有属性名（一般不私有），公有字段名（不要提供公有或受保护的字段，考虑属性）"><a href="#公-私有函数名，公-私有属性名（一般不私有），公有字段名（不要提供公有或受保护的字段，考虑属性）" class="headerlink" title="公&#x2F;私有函数名，公&#x2F;私有属性名（一般不私有），公有字段名（不要提供公有或受保护的字段，考虑属性）"></a>公&#x2F;私有函数名，公&#x2F;私有属性名（一般不私有），公有字段名（不要提供公有或受保护的字段，考虑属性）</h5><p>PascalCasting命名法，函数名务必是动词</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Init</span>()</span> &#123; MyHealth = <span class="number">1</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="临时变量-函数参数"><a href="#临时变量-函数参数" class="headerlink" title="临时变量&#x2F;函数参数"></a>临时变量&#x2F;函数参数</h5><p>camelCasting命名法</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Excute</span>(<span class="params"><span class="built_in">string</span> actionName</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> actionId = GetIdByName(actionName);</span><br><span class="line">    Run(actionId);</span><br><span class="line">    <span class="keyword">return</span> actionId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h5><p>PascalCasting命名法</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">int</span> MaxHealth = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，还需注意几个原则：</p>
+<ul>
+<li>不要缩写（除非你能在Google上用缩写查到这个词的意思如Id，UI，IO，SOS），缩写要么全大写要么全小写（Id为特例）</li>
+<li>不要把复合词语写成多个单词</li>
+<li>可读性高于简洁性</li>
+<li>不要用一般化名来命名如Element、Node、Item类、结构、命名空间，要加上限定符</li>
+<li>不要使用匈牙利命名法</li>
+<li>List等集合形式后面加上<code>s</code>表示复数即可</li>
+<li>优先使用Collection而不是数组（或者枚举器），不要使用只读数组，使用只读集合</li>
+<li>要用肯定性短语：Is、Can、Has（前缀如无必要则不要加）</li>
+</ul>
+<h5 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h5><h6 id="参数设计"><a href="#参数设计" class="headerlink" title="参数设计"></a>参数设计</h6><ul>
+<li>先弄明白需求，选择最简单但能满足需求的参数</li>
+<li>优先使用枚举而不是布尔值</li>
+<li>要抛出Argument Exception</li>
+<li>不要用Enum.IsDefine来检查枚举值</li>
+<li>避免使用out和ref</li>
+<li>尽量不使用params</li>
+</ul>
+<h6 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h6><ul>
+<li>优先提供重载而不是默认参数</li>
+<li>较短的重载应该调用较长的重载</li>
+<li>只把最长的重载设置为虚方法</li>
+<li>不要定义参数类型相似但不同语义的重载</li>
+</ul>
+<h6 id="函数与属性"><a href="#函数与属性" class="headerlink" title="函数与属性"></a>函数与属性</h6><ul>
+<li>优先使用属性赋值而不是方法，方法应该表示操作，而属性才表示数据</li>
+<li>除非有性能问题，否则你应该优先使用属性</li>
+<li>如果一个属性每次都返回不同结构，那么他应该是一个方法（DateTime.Now应该设计为方法）</li>
+<li>属性只用来做一些简单运算，否则使用方法</li>
+<li>不要提供只写属性，也不要让getter比setter访问范围更广，否则用方法</li>
+<li>为所有属性提供合理的默认值</li>
+<li>避免在getter抛出异常，否则使用方法</li>
+</ul>
+<h6 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h6><ul>
+<li>在构造函数里做最小的事情，属性应该和构造函数参数列表一致</li>
+<li>避免在Struct中显式定义默认构造函数</li>
+<li>考虑在Class中显示定义默认构造函数</li>
+<li>避免在构造函数中调用虚方法</li>
+<li>考虑以内联的形式初始化静态字段</li>
+</ul>
+<h6 id="扩展方法"><a href="#扩展方法" class="headerlink" title="扩展方法"></a>扩展方法</h6><ul>
+<li>不要草率定义扩展方法，先用实例方法</li>
+<li>考虑使用扩展方法来解耦</li>
+<li>对接口使用，扩大使用范围</li>
+</ul>
+<h3 id="类、结构、接口、枚举等数据结构的设计"><a href="#类、结构、接口、枚举等数据结构的设计" class="headerlink" title="类、结构、接口、枚举等数据结构的设计"></a>类、结构、接口、枚举等数据结构的设计</h3><ul>
+<li>PascalCasting命名法</li>
+<li>一般是名词或名词短语，如果无法提供这类单词，你可能要考虑重新设计。</li>
+<li>不要添加前缀，除了接口</li>
+<li>考虑在派生类的末尾使用基类的名字，如Exception、EventArgs</li>
+<li>要确保一对类&#x2F;接口只相差一个<code>I</code>前缀，如果该类是该接口的标准实现</li>
+<li>泛型参数，用T或T后面加描述</li>
+<li>优先使用抽象类而不是接口（便于之后增加新的成员，提供兼容性）</li>
+<li>继承接口是Can-Do的关系，而类继承是Is-a的关系</li>
+<li>要为抽象类提供至少一个具体实现</li>
+<li>尽量少用静态类，不要将他作为杂物箱，要有明确的定义</li>
+<li>不要定义没有成员的接口，考虑修饰属性（Attribute）</li>
+<li>不要定义可变值类型，要为值类型实现IEquatable和重载<code>==</code> <code>!=</code>运算符</li>
+</ul>
+<h5 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h5><ul>
+<li>使用单数名词</li>
+<li>复数名词表示位域</li>
+<li>不要添加前后缀</li>
+<li>不要比较枚举的Sentinel值</li>
+<li>为简单枚举提供零值</li>
+</ul>
+<h5 id="标记枚举（flag）"><a href="#标记枚举（flag）" class="headerlink" title="标记枚举（flag）"></a>标记枚举（flag）</h5><ul>
+<li>不要为简单枚举提供标记枚举</li>
+<li>考虑为常用标记组合提供特殊枚举值（复合枚举）</li>
+<li>将0标记为None</li>
+</ul>
+<h5 id="扩展性设计"><a href="#扩展性设计" class="headerlink" title="扩展性设计"></a>扩展性设计</h5><ul>
+<li>把protected成员和public成员看成是一样的，只在完成高级功能时用protected</li>
+<li>优先考虑事件而不是委托，避免在性能要求很高的API中使用委托</li>
+<li>不要提供抽象，除非该抽象以及被实现并测试过了</li>
+<li>提供一个接口和继承自该接口的抽象类</li>
+<li>只有为框架的使用者提供显著帮助时才使用基类，如果只是为了方便实现，则不要用</li>
+</ul>
+<h3 id="事件的设计"><a href="#事件的设计" class="headerlink" title="事件的设计"></a>事件的设计</h3><p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/FliesOfTime/article/details/100688367">https://blog.csdn.net/FliesOfTime/article/details/100688367</a></p>
+<p>事件始终是指某个操作，这个操作可能正在发生，也可能已经发生。 因此与方法一样，事件用谓词命名，谓词时态用于指示事件引发的时间。</p>
+<p><strong>✓ 务必</strong>使用谓词或谓词短语来命名事件。</p>
+<p>示例：<code>Clicked</code>、<code>Painting</code>、<code>DroppedDown</code> 等。</p>
+<p><strong>✓ 务必</strong>通过使用现在时态和过去时态，让事件名称含有时间先后的概念。</p>
+<p>例如，窗口关闭之前引发的事件称为 <code>Closing</code>，窗口关闭之后引发的事件称为 <code>Closed</code>。</p>
+<p>X 请勿使用 “Before” 或 “After” 前缀和后缀来指示事件之前或之后。 应按前述使用现在时态和过去时态。</p>
+<p><strong>✓ 请使用 “EventHandler” 后缀来命名事件处理程序（用作事件类型的委托）</strong>，如以下示例所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public delegate void ClickedEventHandler(object sender, ClickedEventArgs e);</span><br></pre></td></tr></table></figure>
+
+<p><strong>✓ 务必</strong>在事件处理程序中使用两个名为 <code>sender</code> 和 <code>e</code> 的参数。</p>
+<p>sender 参数表示引发事件的对象。 sender 参数的类型通常是 <code>object</code>，且可能会使用更具体的类型。</p>
+<p><strong>✓ 务必</strong>使用“EventArgs”后缀来命名事件参数类。</p>
+<p><em><strong>个人建议：对于名称意义不明的事件可添加Event后缀，尽量少用后缀。</strong></em></p>
+<p>官方参考：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/design-guidelines/names-of-type-members#names-of-events">https://docs.microsoft.com/zh-cn/dotnet/standard/design-guidelines/names-of-type-members#names-of-events</a></p>
+<h5 id="事件触发方法的名称"><a href="#事件触发方法的名称" class="headerlink" title="事件触发方法的名称"></a>事件触发方法的名称</h5><p>事件需要有一个事件触发方法，用于检测事件是否有绑定的方法，如果有就触发事件。直接触发事件在事件没有绑定方法时会引发空异常。</p>
+<p><strong>✓ 务必</strong>使用“On+事件名称”来命名事件触发方法。</p>
+<h3 id="异常的设计"><a href="#异常的设计" class="headerlink" title="异常的设计"></a>异常的设计</h3><ul>
+<li>应该统一使用异常而不是返回值来显示错误（比如错误码）</li>
+<li>异常指的是操作失败，而不是异常情况</li>
+<li>不习惯异常语法不是你不使用异常的理由</li>
+<li>要为所有异常编写文档</li>
+<li>要使用最合理最底层的异常</li>
+<li>不要把异常吞了，考虑捕获特定类型的异常，不要捕获一般异常或系统异常（Exception、SystemException）</li>
+<li>尝试用Tester-Doer模式或者Try-Parse模式，先检查再使用，以提高异常性能</li>
+</ul>
+<h5 id="消息设计"><a href="#消息设计" class="headerlink" title="消息设计"></a>消息设计</h5><ul>
+<li>用句号而不要用问号以及感叹号，避免语法错误</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://circXsora.github.io">soraXsora</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://circxsora.github.io/2020/08/30/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E6%8C%87%E5%8D%97/">https://circxsora.github.io/2020/08/30/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Law/">Law</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2020/12/29/%E8%BD%AF%E6%8A%80%E8%83%BD%E2%80%94%E2%80%94%E4%BB%A3%E7%A0%81%E5%A4%96%E7%9A%84%E7%94%9F%E5%AD%98%E6%8C%87%E5%8D%97/" title="软技能——代码外的生存指南"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">软技能——代码外的生存指南</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">soraXsora</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/circXsora" target="_blank" title="Github"><i class="fa fa-github"></i></a><a class="social-icon" href="/circXsora@outlook.com" target="_blank" title="Email"><i class="fa fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC"><span class="toc-number">1.</span> <span class="toc-text">编程风格</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C"><span class="toc-number">2.</span> <span class="toc-text">C#</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.0.1.</span> <span class="toc-text">类成员的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%AD%97%E6%AE%B5%E5%90%8D"><span class="toc-number">2.0.1.0.1.</span> <span class="toc-text">私有字段名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%AC-%E7%A7%81%E6%9C%89%E5%87%BD%E6%95%B0%E5%90%8D%EF%BC%8C%E5%85%AC-%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7%E5%90%8D%EF%BC%88%E4%B8%80%E8%88%AC%E4%B8%8D%E7%A7%81%E6%9C%89%EF%BC%89%EF%BC%8C%E5%85%AC%E6%9C%89%E5%AD%97%E6%AE%B5%E5%90%8D%EF%BC%88%E4%B8%8D%E8%A6%81%E6%8F%90%E4%BE%9B%E5%85%AC%E6%9C%89%E6%88%96%E5%8F%97%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%AD%97%E6%AE%B5%EF%BC%8C%E8%80%83%E8%99%91%E5%B1%9E%E6%80%A7%EF%BC%89"><span class="toc-number">2.0.1.0.2.</span> <span class="toc-text">公&#x2F;私有函数名，公&#x2F;私有属性名（一般不私有），公有字段名（不要提供公有或受保护的字段，考虑属性）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E5%8F%98%E9%87%8F-%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="toc-number">2.0.1.0.3.</span> <span class="toc-text">临时变量&#x2F;函数参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-number">2.0.1.0.4.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">2.0.1.0.5.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.0.1.0.5.1.</span> <span class="toc-text">参数设计</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD"><span class="toc-number">2.0.1.0.5.2.</span> <span class="toc-text">重载</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%B8%8E%E5%B1%9E%E6%80%A7"><span class="toc-number">2.0.1.0.5.3.</span> <span class="toc-text">函数与属性</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.0.1.0.5.4.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95"><span class="toc-number">2.0.1.0.5.5.</span> <span class="toc-text">扩展方法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E3%80%81%E7%BB%93%E6%9E%84%E3%80%81%E6%8E%A5%E5%8F%A3%E3%80%81%E6%9E%9A%E4%B8%BE%E7%AD%89%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.0.2.</span> <span class="toc-text">类、结构、接口、枚举等数据结构的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-number">2.0.2.0.1.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E6%9E%9A%E4%B8%BE%EF%BC%88flag%EF%BC%89"><span class="toc-number">2.0.2.0.2.</span> <span class="toc-text">标记枚举（flag）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.0.2.0.3.</span> <span class="toc-text">扩展性设计</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.0.3.</span> <span class="toc-text">事件的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E6%96%B9%E6%B3%95%E7%9A%84%E5%90%8D%E7%A7%B0"><span class="toc-number">2.0.3.0.1.</span> <span class="toc-text">事件触发方法的名称</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.0.4.</span> <span class="toc-text">异常的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.0.4.0.1.</span> <span class="toc-text">消息设计</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/07/16/Hexo%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="Hexo使用指南">Hexo使用指南</a><time datetime="2021-07-16T15:02:16.000Z" title="Created 2021-07-16 23:02:16">2021-07-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/12/29/%E8%BD%AF%E6%8A%80%E8%83%BD%E2%80%94%E2%80%94%E4%BB%A3%E7%A0%81%E5%A4%96%E7%9A%84%E7%94%9F%E5%AD%98%E6%8C%87%E5%8D%97/" title="软技能——代码外的生存指南">软技能——代码外的生存指南</a><time datetime="2020-12-29T13:52:24.000Z" title="Created 2020-12-29 21:52:24">2020-12-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/08/30/%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E6%8C%87%E5%8D%97/" title="编程风格">编程风格</a><time datetime="2020-08-30T04:46:17.000Z" title="Created 2020-08-30 12:46:17">2020-08-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By soraXsora</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
